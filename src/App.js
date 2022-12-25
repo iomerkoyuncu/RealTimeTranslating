@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {TranslatorProvider, useTranslator} from 'react-native-translator';
+import Home from './screens/Home';
+import Icon from 'react-native-vector-icons';
 
 import {
   Text,
@@ -9,6 +11,7 @@ import {
   Button,
   Alert,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 
 const Hook = () => {
@@ -89,8 +92,8 @@ const Hook = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text>DETECTED</Text>
-            <Text>English</Text>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>DETECTED</Text>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>English</Text>
           </View>
           <View
             style={{
@@ -99,7 +102,7 @@ const Hook = () => {
               justifyContent: 'center',
               padding: 5,
             }}>
-            <Text>{value}</Text>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>{value}</Text>
           </View>
         </View>
         <View
@@ -114,8 +117,8 @@ const Hook = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text>TRANSLATED</Text>
-            <Text>Türkçe</Text>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>TRANSLATED</Text>
+            <Text style={{fontFamily: 'Poppins-Regular'}}>Türkçe</Text>
           </View>
           <View
             style={{
@@ -137,14 +140,19 @@ const Hook = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
-              <Text>{result}</Text>
+              <Text style={{fontFamily: 'Poppins-Regular'}}>{result}</Text>
             </View>
             <View
               style={{
                 flex: 1,
                 justifyContent: 'flex-end',
               }}>
-              <Button title="TRANSLATE"></Button>
+              <Icon.Button
+                name="facebook"
+                backgroundColor="#3b5998"
+                onPress={this.loginWithFacebook}>
+                Login with Facebook
+              </Icon.Button>
             </View>
           </View>
         </View>
@@ -167,6 +175,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: 'transparent',
+    fontFamily: 'Poppins-Regular',
   },
   content: {
     flex: 2,
@@ -185,7 +194,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 18,
-    fontFamily: 'Roboto',
+
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'left',
@@ -195,7 +204,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontFamily: 'Roboto',
     color: 'black',
     width: '100%',
     height: '100%',
