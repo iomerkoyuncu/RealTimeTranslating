@@ -1,8 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {TranslatorProvider, useTranslator} from 'react-native-translator';
 import Home from './screens/Home';
-import Icon from 'react-native-vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {
   Text,
@@ -43,8 +43,15 @@ const Hook = () => {
   }
 
   const onTranslate = async () => {
+    if (value === '') {
+      Alert.alert('Please scan text to translate!');
+      return;
+    }
     try {
       setLoading(true);
+      if (result) {
+        clearState();
+      }
       const _result = await translate('en', 'tr', value, {
         type: 'kakao',
         timeout: 10000,
@@ -55,6 +62,11 @@ const Hook = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const clearState = () => {
+    setValue('');
+    setResult('');
   };
 
   return (
@@ -78,7 +90,7 @@ const Hook = () => {
           flex: 2,
           justifyContent: 'space-between',
           backgroundColor: 'white',
-          color: 'black',
+          padding: 10,
         }}>
         <View
           style={{
@@ -92,8 +104,12 @@ const Hook = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>DETECTED</Text>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>English</Text>
+            <Text style={{fontFamily: 'Poppins-Bold', color: 'black'}}>
+              DETECTED
+            </Text>
+            <Text style={{fontFamily: 'Poppins-Bold', color: 'black'}}>
+              English
+            </Text>
           </View>
           <View
             style={{
@@ -102,7 +118,14 @@ const Hook = () => {
               justifyContent: 'center',
               padding: 5,
             }}>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>{value}</Text>
+            <Text
+              style={{
+                fontFamily: 'Poppins-Bold',
+                color: 'black',
+                fontSize: 18,
+              }}>
+              {value}
+            </Text>
           </View>
         </View>
         <View
@@ -117,8 +140,12 @@ const Hook = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>TRANSLATED</Text>
-            <Text style={{fontFamily: 'Poppins-Regular'}}>Türkçe</Text>
+            <Text style={{fontFamily: 'Poppins-Bold', color: 'black'}}>
+              TRANSLATED
+            </Text>
+            <Text style={{fontFamily: 'Poppins-Bold', color: 'black'}}>
+              Türkçe
+            </Text>
           </View>
           <View
             style={{
@@ -131,8 +158,17 @@ const Hook = () => {
               style={{
                 flex: 1,
                 justifyContent: 'flex-end',
+                alignItems: 'center',
               }}>
-              <Button title="CLEAR"></Button>
+              <Pressable
+                style={{
+                  borderRadius: 50,
+                  backgroundColor: '#e0e0e0',
+                  padding: 10,
+                }}
+                onPress={clearState}>
+                <AntDesign name="reload1" size={30} style={{color: 'black'}} />
+              </Pressable>
             </View>
             <View
               style={{
@@ -140,19 +176,29 @@ const Hook = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontFamily: 'Poppins-Regular'}}>{result}</Text>
+              <Text style={{fontFamily: 'Poppins-Bold', color: 'black'}}>
+                {result}
+              </Text>
             </View>
             <View
               style={{
                 flex: 1,
                 justifyContent: 'flex-end',
+                alignItems: 'center',
               }}>
-              <Icon.Button
-                name="facebook"
-                backgroundColor="#3b5998"
-                onPress={this.loginWithFacebook}>
-                Login with Facebook
-              </Icon.Button>
+              {loading ? (
+                <ActivityIndicator color="black" />
+              ) : (
+                <Pressable
+                  style={{
+                    backgroundColor: '#e0e0e0',
+                    borderRadius: 50,
+                    padding: 10,
+                  }}
+                  onPress={onTranslate}>
+                  <AntDesign name="check" size={30} style={{color: 'black'}} />
+                </Pressable>
+              )}
             </View>
           </View>
         </View>
@@ -162,9 +208,10 @@ const Hook = () => {
 };
 
 const App = () => {
+  const [formKey, setFormKey] = useState(10);
   return (
     <TranslatorProvider>
-      <Hook />
+      <Hook key={formKey} />
     </TranslatorProvider>
   );
 };
@@ -175,7 +222,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: 'transparent',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold',
   },
   content: {
     flex: 2,
