@@ -1,12 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, Text, Button, Pressable} from 'react-native';
+import { View, StyleSheet, Text, Linking, Pressable } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <View style={styles.main}>
       <View
         style={{
           padding: 20,
+          flex: 5,
+          justifyContent: 'flex-end',
         }}>
         <Text style={styles.font}>Welcome to Real Time Translating.</Text>
         <Text
@@ -15,21 +18,34 @@ const Home = () => {
             fontSize: 24,
             color: '#000',
             textAlign: 'justify',
+            padding: 10,
+            marginTop: 10,
           }}>
           You can scan sentences or words with the camera and translate them
           instantly.
+        </Text>
+        <Text style={{
+          fontFamily: 'Poppins-Regular',
+          fontSize: 24,
+          color: '#000',
+          textAlign: 'justify',
+          padding: 10,
+          marginTop: 10,
+        }}>
+          Scan the word or sentence you want to translate and press the button.
         </Text>
       </View>
       <View
         style={{
           height: 120,
-          justifyContent: 'space-between',
+          flex: 3,
+          justifyContent: 'center',
         }}>
         <Pressable
+          onPress={() => navigation.navigate('Translate')}
           style={{
-            backgroundColor: '#293462',
-            color: '#fff',
-            width: 300,
+            backgroundColor: '#07031A',
+            width: 350,
             height: 50,
             borderRadius: 10,
             justifyContent: 'center',
@@ -44,31 +60,39 @@ const Home = () => {
               fontFamily: 'Poppins-Bold',
               color: '#fff',
             }}>
-            English to Turkish
+            Get Started
           </Text>
         </Pressable>
-        <Pressable
-          style={{
-            backgroundColor: '#EB1D36',
-            color: '#000',
-            width: 300,
-            height: 50,
-            borderRadius: 10,
-            justifyContent: 'center',
+      </View>
+      <View
+        style={{
+          flex: 2,
+          justifyContent: 'flex-end',
+        }}
+      >
+        <View style={
+          {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignContent: 'center',
             alignItems: 'center',
+            width: 350,
             padding: 10,
-            borderWidth: 2,
-            borderColor: '#000',
-          }}>
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily: 'Poppins-Bold',
-              color: '#000',
-            }}>
-            Türkçeden İngilizceye
-          </Text>
-        </Pressable>
+          }
+        }>
+          <Text style={{
+            fontFamily: 'Poppins-Regular',
+            fontSize: 16,
+            color: '#000',
+            padding: 10,
+          }}>ismetkync 2022</Text>
+          <Pressable
+            style={styles.pressable}
+            onPress={() => { Linking.openURL('https://github.com/ismetkync/RealTimeTranslating') }}
+          >
+            <AntDesign name="github" size={30} style={{ color: 'black' }} />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -86,7 +110,10 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  pressable: {
+    backgroundColor: '#fff',
+    padding: 10,
   },
 });
